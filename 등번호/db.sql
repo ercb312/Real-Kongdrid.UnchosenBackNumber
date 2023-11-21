@@ -20,11 +20,10 @@ update backNum(set pos='GK' where num=1);
 추가
 alter table backNum add size int;
 수정
-alter table backNum modify size;
-rename column size to shirtsize
+alter table backNum modify size rename column size to shirtsize;
 
 삭제
-alter table backNum drop size;
+alter table backNum drop shirtsize;
 */
 create databases football;
 show databases;
@@ -39,3 +38,9 @@ insert into backNum(num, name, age, pos) values(1, 'jeongseyun', 20, 'GK/RW')
 update backNum(set pos='GK' where num=1);
 
 delete from backNum where num=1;
+
+alter table backNum add size int;
+
+alter table backNum modify size rename column size to shirtsize;
+
+alter table backNum drop shirtsize;
