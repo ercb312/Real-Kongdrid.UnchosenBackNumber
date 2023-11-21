@@ -1,6 +1,26 @@
-numList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 30, 53, 66, 88] #sort로 정리 함
+import json
+
+# json 모듈에서 알고 있어야 할 함수 2가지
+# json.loads(byte) => byte를 string으로 바꿔줌
+# json.dumps(dict) => dictionary를 string으로 바꿔줌
+
+def save(data:dict|list, path:str="file.json") -> None:
+    """
+    data를 json 형태로 {path}에 저장한다
+    """
+    with open(path, "w", encoding="utf8") as f:
+        f.write(json.dumps(data, indent=2, ensure_ascii=True))
+
+def load(path:str="file.json") -> dict|list:
+    """
+    {path}에 저장된 json data를 dict 또는 list 형태로 반환(return)
+    """
+    with open(path, "r", encoding="utf8") as f:
+        return json.loads(f.read())
+
+
 # 딕셔너리로 명단 정리 {번호(10진수):'이름(문자열)'}
-backNum = {'1': '정세윤', 2: '손성준', 3: '김시완', 4: '변호준', 5: '이태현', 6: '박민재', 7: '김유찬', 8: '유현석', 9: '박진수', 10: '강민재', 11: '김태우', 12: '정주헌', 13: '서윤명', 14: '장지웅', 15: '김주호', 16: '우익현', 17: '성시훈', 19: '변정훈', 20: '김선준', 30: '김용관', 53: '양 준혁', 66: '박준재', 88: '김영훈'}
+backNum = load("backNum.json")
 print(backNum)
 while(1): 
     #print("0을 입력하면 프로그램이 종료됩니다")
@@ -19,9 +39,11 @@ while(1):
     if(name == None):
         print("등번호가 %s인 콩은 없습니다!" %num)
         ans = input("등번호를 %s(으)로 하시겠습니까? (Y/N): " %num)
-        if(ans == 'Y'):
+        if(ans.upper() == 'Y'):
             playerName = input('이름을 입력해주세요: ')
-            backNum = {num:playerName}
+            # backNum = {num:playerName}
+            backNum[num] = playerName
+            save(backNum, "backNum.json")
             print('콩이 되신 것을 환영합니다! '+backNum.get(num)+'님')
             print('콩나물 선수 명단: ')
             print(backNum)
@@ -29,6 +51,11 @@ while(1):
         if(ans == 'N'):
             continue
 
+
+"""
+CSS 선택자(selector) -> sizzle(공식 명칭)
+querySelector -> MDN 으로 보기
+"""
 
 #주인 없는 번호와 이름을 입력하지 않으면 while문의 무한반복 
 # => 아래 코드를 실행하면 가능하지만 계속 input을 해줘야 한다
